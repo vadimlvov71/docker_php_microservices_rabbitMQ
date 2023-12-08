@@ -1,0 +1,64 @@
+version: '3'
+# Список наших сервисов (контейнеров)
+services:
+    nginx:
+        container_name: nginx_rabbitmq
+        image: nginx:latest
+        # mapping ports
+        ports:
+            - "85:80"
+            - "86:82"
+        # mapping directories
+        volumes:
+            - ./nginx:/etc/nginx/conf.d
+            - ./www:/var/www
+            - ./logs:/var/log/nginx
+        depends_on:
+          - php_sender
+        #links:
+         #   - php
+        restart: always
+
+    php_sender:
+        container_name: php_rabbitmq_sender
+        # directory for php dockerfile
+        build: ./php_instances/php_sender
+        
+        #depends_on:
+        #  - php_receiver
+        depends_on:
+          - php_receiver
+          #- rabbitmq 
+        volumes:
+            - ./www/sender:/var/www/sender
+        restart: always
+    
+    php_receiver:
+        container_name: php_rabbitmq_receiver
+        build:
+          context: .
+          dockerfile: php_instances/php_receiver/Dockerfile
+        #command: "php /app/receive.php"
+        command: "php index.php"
+        volumes:
+          - ./www/src:/var/www/src
+        depends_on:
+          rabbitmq:
+            condition: service_healthy
+        links:
+          - rabbitmq
+        restart: always
+      
+    rabbitmq:
+      build:
+        context: .
+        dockerfile: rabbitmq/Dockerfile
+      ports:
+        - "15672:15672"
+        - "5672:5672"
+      restart: always
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5

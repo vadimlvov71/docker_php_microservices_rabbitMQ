@@ -1,0 +1,7 @@
+
+### ###
+/www/sender/vendor/
+/www/src/vendor/
+###< ignore the logs dir content ###
+!/logs/**/
+
