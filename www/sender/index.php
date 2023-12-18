@@ -17,6 +17,7 @@ foreach ($lines as $line_num => $line) {
     );
     $channel->basic_publish($msg, '', 'hello');
     echo "Line #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
+    echo round(memory_get_usage() / 1024 / 1024, 2) . ' MB' . PHP_EOL;
 }
 
 //$channel->basic_publish($msg, '', 'hello');
