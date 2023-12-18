@@ -3,7 +3,8 @@
 1. nginx
 2. php producer
 3. php consumer
-4. rabbitmq
+4. python consumer
+5. rabbitmq
    
 #### Aim:
 * one php instance reads a file
