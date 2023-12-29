@@ -1,7 +1,9 @@
 
 ### ###
-/www/sender/vendor/
+/www/sender/vendor/index.php.bak
+/www/sender/
 /www/src/vendor/
 ###< ignore the logs dir content ###
 !/logs/**/
+
 
