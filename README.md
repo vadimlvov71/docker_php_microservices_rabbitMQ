@@ -1,6 +1,6 @@
 ### dockerized 2 php instances and python one as microservices with rabbitMQ
 #### 5 containers:
-1. nginx
+1. nginx - the entrypoint to the container  "php producer"  index.php
 2. php producer
 3. php consumer
 4. python consumer
