@@ -5,7 +5,11 @@
 3. php consumer
 4. python consumer
 5. rabbitmq
-   
+#### Structure:
+* the directory "www" are located three foulders:
+* "sender" as the entry point http://localhost:85/
+* "php_receiver" as receiver
+* "python" as receiver
 #### Aim:
 * one php instance reads a file
 * https://github.com/vadimlvov71/docker_php_microservices_rabbitMQ/blob/master/www/sender/files/newfile.txt
