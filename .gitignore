@@ -1,6 +1,7 @@
 
 ### ###
-/www/sender/vendor/index.php.bak
+/www/sender/index.php.bak
+/www/sender/queque.php
 /www/sender/
 /www/src/vendor/
 ###< ignore the logs dir content ###
