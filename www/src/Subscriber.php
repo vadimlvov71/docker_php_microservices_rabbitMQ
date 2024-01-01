@@ -41,6 +41,9 @@ print 'Waiting for logs. To exit press CTRL+C' . PHP_EOL;
 $callback = function($msg){
     FileHelper::addRowToFile (FILE_PATH, $msg->body);
     print "Read: " . $msg->body . PHP_EOL;
+    if ($msg->body === "end"){
+        print "end: " . $msg->body . PHP_EOL;
+    }
 };
 
 $channel->basic_consume(
