@@ -5,6 +5,13 @@
 3. php consumer
 4. python consumer
 5. rabbitmq
+
+##### Built With
+
+*  php 8.2    with ENUM type
+*  phpunit TODO
+*  rabbitmq
+*  python3
 #### Structure:
 * the directory "www" are located three foulders:
 * "sender" as the entry point http://localhost:85/
