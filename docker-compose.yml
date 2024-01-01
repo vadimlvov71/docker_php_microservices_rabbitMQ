@@ -35,7 +35,7 @@ services:
           dockerfile: php_instances/php_receiver/Dockerfile
         command: "php index.php"
         volumes:
-          - ./www/src:/var/www/src
+          - ./www/php_receiver:/var/www/php_receiver
         depends_on:
           rabbitmq:
             condition: service_healthy

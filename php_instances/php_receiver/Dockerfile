@@ -18,7 +18,7 @@ RUN docker-php-ext-install mbstring exif pcntl bcmath gd
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www/src
+WORKDIR /var/www/php_receiver
 
 CMD ["php-fpm"]
 

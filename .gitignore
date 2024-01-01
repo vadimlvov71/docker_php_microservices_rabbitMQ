@@ -3,7 +3,8 @@
 /www/sender/index.php.bak
 /www/sender/queque.php
 /www/sender/vendor/
-/www/src/vendor/
+/www/php_receiver/vendor/
+/www/php_receiver/*.bak
 ###< ignore the logs dir content ###
 !/logs/**/
 
