@@ -1,55 +1,65 @@
 <?php
 error_reporting(E_ALL ^ E_DEPRECATED);
-
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/service/RabbitEnv.php';
+require_once __DIR__ . '/service/FileHelper.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+#use PhpAmqpLib\Message\AMQPMessage;
 
+define("FILE_PATH", "./files/invoice2.txt");
 
-try {
-    $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
-    $channel = $connection->channel();
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
+$connection = new AMQPStreamConnection(
+    RabbitEnv::Host->value, 
+    RabbitEnv::Port->value, 
+    RabbitEnv::Username->value, 
+    RabbitEnv::getPassword()
+);
 
-$channel->queue_declare('hello', false, true, false, false);
+$channel = $connection->channel();
 
-echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
- 
-$callback = function($msg) {
+# Create the exchange if it doesnt exist already.
+$channel->exchange_declare(
+    RabbitEnv::Exchange->value, 
+    'fanout', # type
+    false,    # passive
+    false,    # durable
+    false     # auto_delete
+);
 
-    $waitSeconds = rand(15,30);
-    addRowToFile($msg->body);
-    echo " [x] Host!!!: " . getenv('HOSTNAME') ." Waiting: " . $waitSeconds . " seconds. Received msg: ", $msg->body, "\n";
-    //sleep(substr_count($msg->body, '.'));
-    sleep($waitSeconds);
-    echo " [x] Done!!!", "\n";
-    $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-    
+list($queue_name, ,) = $channel->queue_declare(
+    "",    # queue
+    false, # passive
+    false, # durable
+    true,  # exclusive
+    false  # auto delete
+);
+
+$channel->queue_bind($queue_name, RabbitEnv::Exchange->value);
+print 'Waiting for logs. To exit press CTRL+C' . PHP_EOL;
+
+$callback = function($msg){
+    FileHelper::addRowToFile (FILE_PATH, $msg->body);
+    print "Read: " . $msg->body . PHP_EOL;
+    if ($msg->body === "end"){
+        print "end: " . $msg->body . PHP_EOL;
+    }
 };
 
-$channel->basic_qos(null, 1, null);
-try {
-    $channel->basic_consume('hello', '', false, false, false, false, $callback);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
+$channel->basic_consume(
+    $queue_name, 
+    '', 
+    false, 
+    true, 
+    false, 
+    false, 
+    $callback
+);
 
-
-while(count($channel->callbacks)) {
+while (count($channel->callbacks)) 
+{
     $channel->wait();
 }
 
-//Не забываем закрыть соединение и канал
 $channel->close();
 $connection->close();
-
-function addRowToFile(string $line): void
-{
-    $myfile = fopen("./files/invoice2.txt", "a") or die("Unable to open file!");
-    $txt = $line . PHP_EOL;
-    fwrite($myfile, $txt);
-    fclose($myfile);
-}
-

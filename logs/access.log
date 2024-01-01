@@ -73,3 +73,5 @@
 172.23.0.1 - - [01/Jan/2024:09:36:19 +0000] "GET /css/w3.css HTTP/1.1" 200 21 "http://localhost:85/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0"
 172.23.0.1 - - [01/Jan/2024:09:36:49 +0000] "GET / HTTP/1.1" 200 3202 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0"
 172.23.0.1 - - [01/Jan/2024:09:36:49 +0000] "GET /css/w3.css HTTP/1.1" 200 21 "http://localhost:85/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0"
+172.23.0.1 - - [01/Jan/2024:09:49:20 +0000] "GET / HTTP/1.1" 200 3202 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0"
+172.23.0.1 - - [01/Jan/2024:09:49:20 +0000] "GET /css/w3.css HTTP/1.1" 200 21 "http://localhost:85/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0"
