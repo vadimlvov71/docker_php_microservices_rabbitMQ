@@ -25,7 +25,7 @@
 * via the RabbitMQ instance as an exchange
 * to another php service,
 * where data were written lines by lines to another file
-  https://github.com/vadimlvov71/docker_php_microservices_rabbitMQ/blob/master/www/src/Subscriber.php
+  https://github.com/vadimlvov71/docker_php_microservices_rabbitMQ/blob/master/www/php_receiver/index.php
 * and to python instance
   https://github.com/vadimlvov71/docker_php_microservices_rabbitMQ/blob/master/www/python/consumer_exchange.py
 
